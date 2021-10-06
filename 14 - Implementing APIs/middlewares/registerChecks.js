@@ -1,0 +1,24 @@
+const { emailValidate,
+    passwordValidate } = require('../utils/validate')
+
+const registerInitialCheck = (req, res, next) => {
+    const { email, password, confirmPassword } = req.body;
+    console.log(email);
+    if (
+        typeof email === 'string' &&
+        typeof password === 'string' &&
+        typeof confirmPassword === 'string' &&
+        email.length > 0 &&
+        password.length > 8 &&
+        confirmPassword === password &&
+        emailValidate(email) &&
+        passwordValidate(password)
+    ) {
+        next();
+    }
+    else {
+        res.status(401).send("initial check failed");
+    }
+}
+
+module.exports = registerInitialCheck;
